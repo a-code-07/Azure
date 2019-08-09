@@ -12,224 +12,238 @@
 
     <style>
         body {
-            background-image:url('../../carImages/photo-1486006920555-c77dcf18193c.jpeg');
-            background-size:cover;
-            /*background-color:darkslategrey;*/
+            /*background-image:url('../../carImages/photo-1486006920555-c77dcf18193c.jpeg');*/
+            background-size: cover;
+            background-color: black;
+            color: gray;
+        }
+
+        i#r {
+            font-size: 550px;
+            position: absolute;
+            top: 72px;
+            right: 437px;
         }
     </style>
 }
-<h1 style="text-align:center;color:yellow;font-family:'Imprint MT Shadow';font-size:80px;">Admin Add Area</h1>
+<h1 style="text-align:center;color:yellow;font-family:'Imprint MT Shadow';font-size:80px;"></h1>
+<br />
+<br />
+<br />
+<body>
+    <div><i class="fas fa-database" id="r" style="opacity:0.4"></i></div>
 
-<div class="row">
-    <div class="col-md-4">
-        <table id="brndtable" class="table table-bordered table-hover" style="background-color:gray;">
-            <thead>
-                <tr>
-                    <th style="text-align:center;color:white;font-size:25px;">Car Brands</th>
-                    <th style="border-left:hidden;"></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var brnd in Model.ShowCarBrand)
-                {
+    <div class="row">
+        <div class="col-md-4">
+            <table id="brndtable" class="table table-hover results" style="background-color:white; opacity:0.8;">
+                <thead>
+                    <tr>
+                        <th style="text-align:center;color:#337ab7;font-size:25px;">Car Brands</th>
+                        <th style="border-left:hidden;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var brnd in Model.ShowCarBrand)
+                    {
 
-                <tr>
-                    <td style="text-align:center;color:aqua;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:15px;"><strong> @brnd.CarBrandsData </strong></td>
-                    <td style="text-align:center;border-left:hidden;"><button id="js-delBrnd" class="btn  fa fa-trash" data-brnd="@brnd.Id" style="color:red;" /></td>
+                        <tr>
+                            <td style="text-align:center;color:black;font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;font-size:15px;"><strong> @brnd.CarBrandsData </strong></td>
+                            <td style="text-align:center;border-left:hidden;"><button id="js-delBrnd" class="btn  fa fa-trash" data-brnd="@brnd.Id" style="color:red;" /></td>
 
-                </tr>
+                        </tr>
 
-                }
-            <tr>
-                <td style="text-align:center"><input type="text" id="brnd" /> </td>
-                <td style="text-align:center"><button id="btnAddBrnd" class="btn fa fa-plus" /></td>
-            </tr>
-
-            </tbody>
-        </table>
-    </div>
-    <div class="col-md-4">
-        <table id="styltable" class="table table-bordered table-hover" style="background-color:gray;">
-            <thead>
-                <tr>
-                    <th style="text-align:center;color:white;font-size:25px;">Car Styles</th>
-                    <th style="border-left:hidden;"></th>
-                </tr>
-            </thead>
-            <tbody>          
-                
-                @foreach (var style in Model.ShowCarStyle)
-                {
-
-                <tr>
-                    <td style="text-align:center;color:aqua;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:15px;"><strong> @style.CarStylesData</strong> </td>
-                    <td style="border-left:hidden; text-align:center"><button id="js-delStyle" class="btn fa fa-trash" data-style="@style.Id" style="color:red;" /> </td>
-                </tr>
-
-                }
-            <tr>
-                <td style="text-align:center"><input type="text" id="style" /> </td>
-                <td style="text-align:center"><button id="btnAddStyle" class="btn fa fa-plus" /></td>
-            </tr>
-
-            </tbody>
-        </table>
-    </div>
-    <div class="col-md-4">
-        <table id="sertable" class="table table-bordered table-hover" style="background-color:gray;">
-            <thead>
-                <tr>
-                    <th style="text-align:center;color:white;font-size:25px;">Car Services</th>
-                    <th style="border-left:hidden;"></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var style in Model.ShowServiceTypes)
-                {
-
-                    <tr class="detail">
-                        <td style="text-align:center;color:aqua;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:15px;"><strong> @style.CarServicesData </strong>  </td>
-                        <td style="border-left:hidden; text-align:center;"><button id="js-delSer" class="btn fa fa-trash" data-ser="@style.Id" style="color:red;" /> </td>
+                    }
+                    <tr>
+                        <td style="text-align:center"><input type="text" id="brnd" /> </td>
+                        <td style="text-align:center"><button id="btnAddBrnd" class="btn fa fa-plus" /></td>
                     </tr>
 
-                }
-            </tbody>
-            <tr>
-                <td style="text-align:center"> <input type="text" id="srvc" /> </td>
-                <td style="text-align:center"><button id="btnAddService" class="btn fa fa-plus" /></td>
-            </tr>
-        </table>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <table id="styltable" class="table table-bordered table-hover" style="background-color:white; opacity:0.8;">
+                <thead>
+                    <tr>
+                        <th style="text-align:center;color:#337ab7;font-size:25px;">Car Styles</th>
+                        <th style="border-left:hidden;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var style in Model.ShowCarStyle)
+                    {
+
+                        <tr>
+                            <td style="text-align:center;color:black;font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;font-size:15px;"><strong> @style.CarStylesData</strong> </td>
+                            <td style="border-left:hidden; text-align:center"><button id="js-delStyle" class="btn fa fa-trash" data-style="@style.Id" style="color:red;" /> </td>
+                        </tr>
+
+                    }
+                    <tr>
+                        <td style="text-align:center"><input type="text" id="style" /> </td>
+                        <td style="text-align:center"><button id="btnAddStyle" class="btn fa fa-plus" /></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <table id="sertable" class="table table-bordered table-hover" style="background-color:white; opacity:0.8">
+                <thead>
+                    <tr>
+                        <th style="text-align:center;color:#337ab7;font-size:25px;">Service Types</th>
+                        <th style="border-left:hidden;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var style in Model.ShowServiceTypes)
+                    {
+
+                        <tr class="detail">
+                            <td style="text-align:center;color:black;font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;font-size:15px;"><strong> @style.CarServicesData </strong>  </td>
+                            <td style="border-left:hidden; text-align:center;"><button id="js-delSer" class="btn fa fa-trash" data-ser="@style.Id" style="color:red;" /> </td>
+                        </tr>
+
+                    }
+                </tbody>
+                <tr>
+                    <td style="text-align:center"> <input type="text" id="srvc" /> </td>
+                    <td style="text-align:center"><button id="btnAddService" class="btn fa fa-plus" /></td>
+                </tr>
+            </table>
+        </div>
     </div>
-</div>
 
-@section scripts{
-    <script type="text/javascript">
+    @section scripts{
+        <script type="text/javascript">
 
-        //BRAND SECTION
-                 document.getElementById('btnAddBrnd').addEventListener('click', function () {
-        addBrand(document.getElementById('brnd').value);
-    });
-        function addBrand(brnddata) {    
-            var addData = {};
-            addData.CarBrandsData = brnddata;           
-            //alert(addData.CarServicesData);
-            $.ajax({
-                data: JSON.stringify(addData.CarBrandsData),
-                dataType: 'json',
-                url: '/api/AddBrands/',
-                data: addData,
-                method: 'POST',                
-                success: function () {
-                    location.reload();
+            //BRAND SECTION
+            document.getElementById('btnAddBrnd').addEventListener('click', function () {
+                addBrand(document.getElementById('brnd').value);
+            });
+            function addBrand(brnddata) {
+                var addData = {};
+                addData.CarBrandsData = brnddata;
+                //alert(addData.CarServicesData);
+                $.ajax({
+                    data: JSON.stringify(addData.CarBrandsData),
+                    dataType: 'json',
+                    url: '/api/AddBrands/',
+                    data: addData,
+                    method: 'POST',
+                    success: function () {
+                        location.reload();
+                    }
+                })
             }
-        })
-    }
-    //function DelServc(id) {
-    // alert(id);
-    $(document).ready(function () {
-        $('#brndtable #js-delBrnd').on('click',function () {
-            var button = $(this)
-             if (confirm('Confirm Delete ?')) {
-                 $.ajax({
-                     url: '/api/AddBrands/' + $(this).attr('data-brnd'),
-                        method: 'DELETE',
-                        success: function () { 
-                            button.parents('tr').remove()
-                        }                     
-                    })
-                }
+            //function DelServc(id) {
+            // alert(id);
+            $(document).ready(function () {
+                $('#brndtable #js-delBrnd').on('click', function () {
+                    var button = $(this)
+                    if (confirm('Confirm Delete ?')) {
+                        $.ajax({
+                            url: '/api/AddBrands/' + $(this).attr('data-brnd'),
+                            method: 'DELETE',
+                            success: function () {
+                                button.parents('tr').remove()
+                            }
+                        })
+                    }
 
 
 
-    })      
+                })
 
-        })
+            })
 
-        //STYLE SECTION
+            //STYLE SECTION
 
-         document.getElementById('btnAddStyle').addEventListener('click', function () {
-        addStyle(document.getElementById('style').value);
-    });
-        function addStyle(styldata) {    
-            var addData = {};
-            addData.CarStylesData = styldata;           
-            //alert(addData.CarServicesData);
-            $.ajax({
-                data: JSON.stringify(addData.CarStylesData),
-                dataType: 'json',
-                url: '/api/AddStyles/',
-                data: addData,
-                method: 'POST',                
-                success: function () {
-                    location.reload();
+            document.getElementById('btnAddStyle').addEventListener('click', function () {
+                addStyle(document.getElementById('style').value);
+            });
+            function addStyle(styldata) {
+                var addData = {};
+                addData.CarStylesData = styldata;
+                //alert(addData.CarServicesData);
+                $.ajax({
+                    data: JSON.stringify(addData.CarStylesData),
+                    dataType: 'json',
+                    url: '/api/AddStyles/',
+                    data: addData,
+                    method: 'POST',
+                    success: function () {
+                        location.reload();
+                    }
+                })
             }
-        })
-    }
-    //function DelServc(id) {
-    // alert(id);
-    $(document).ready(function () {
-        $('#styltable #js-delStyle').on('click',function () {
-            var button = $(this)
-             if (confirm('Confirm Delete ?')) {
-                 $.ajax({
-                     url: '/api/AddStyles/' + $(this).attr('data-style'),
-                        method: 'DELETE',
-                        success: function () { 
-                            button.parents('tr').remove()
-                        }                     
-                    })
-                }
+            //function DelServc(id) {
+            // alert(id);
+            $(document).ready(function () {
+                $('#styltable #js-delStyle').on('click', function () {
+                    var button = $(this)
+                    if (confirm('Confirm Delete ?')) {
+                        $.ajax({
+                            url: '/api/AddStyles/' + $(this).attr('data-style'),
+                            method: 'DELETE',
+                            success: function () {
+                                button.parents('tr').remove()
+                            }
+                        })
+                    }
 
 
 
-    })      
+                })
 
-        })     
-        
+            })
 
-        //SERVICE SECTION
-    document.getElementById('btnAddService').addEventListener('click', function () {
-        addService(document.getElementById('srvc').value);
-    });
-        function addService(login) {        
-            var d = 0;
-            var addData = {};
-            addData.CarServicesData = login;           
-            //alert(addData.CarServicesData);
-            $.ajax({
-                data: JSON.stringify(addData.CarServicesData),
-                dataType: 'json',
-                url: '/api/AddServices/',
-                data: addData,
-                method: 'POST',                
-                success: function () {
-                    location.reload();
+
+            //SERVICE SECTION
+            document.getElementById('btnAddService').addEventListener('click', function () {
+                addService(document.getElementById('srvc').value);
+            });
+            function addService(login) {
+                var d = 0;
+                var addData = {};
+                addData.CarServicesData = login;
+                //alert(addData.CarServicesData);
+                $.ajax({
+                    data: JSON.stringify(addData.CarServicesData),
+                    dataType: 'json',
+                    url: '/api/AddServices/',
+                    data: addData,
+                    method: 'POST',
+                    success: function () {
+                        location.reload();
+                    }
+                })
             }
-        })
+            //function DelServc(id) {
+            // alert(id);
+            $(document).ready(function () {
+                $('#sertable #js-delSer').on('click', function () {
+                    var button = $(this)
+                    if (confirm('Confirm Delete ?')) {
+                        $.ajax({
+                            url: '/api/AddServices/' + $(this).attr('data-ser'),
+                            method: 'DELETE',
+                            success: function () {
+                                button.parents('tr').remove()
+                            }
+                        })
+                    }
+
+
+
+                })
+
+
+            })
+
+
+
+        </script>
     }
-    //function DelServc(id) {
-    // alert(id);
-    $(document).ready(function () {
-        $('#sertable #js-delSer').on('click',function () {
-            var button = $(this)
-             if (confirm('Confirm Delete ?')) {
-                 $.ajax({
-                     url: '/api/AddServices/' + $(this).attr('data-ser'),
-                        method: 'DELETE',
-                        success: function () { 
-                            button.parents('tr').remove()
-                        }                     
-                    })
-                }
-
-
-
-    })
-       
-
-        })     
-        
-  
-
-    </script>
-}
+</body>
