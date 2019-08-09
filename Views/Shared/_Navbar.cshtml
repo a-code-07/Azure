@@ -1,7 +1,7 @@
-﻿<div class="navbar navbar-fixed-top" style="background-color:#fdeee6">
+﻿<div class="navbar navbar-fixed-top" style="background-color:black">
     @*<div class="mylogo">
-        <img src="~/images/download.png"/>
-    </div>*@
+            <img src="~/images/download.png"/>
+        </div>*@
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -16,12 +16,11 @@
                 <li>@Html.ActionLink("Customer", "Index", "User")</li>
                 @if (ViewContext.HttpContext.User.IsInRole("admin"))
                 {
-                    <li>@Html.ActionLink("Admin Section", "About", "Home")</li>                   
+                    <li>@Html.ActionLink("Administrator", "About", "Home")</li>
                 }
-              
             </ul>
             @Html.Partial("_LoginPartial")
-            
+
         </div>
     </div>
 </div>
