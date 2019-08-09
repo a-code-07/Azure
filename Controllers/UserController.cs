@@ -246,7 +246,7 @@ namespace GarageProject.Controllers
         [HttpPost]
         public ActionResult EditUserPage(ApplicationUser user)
         {
-            user.UserName = user.Email;
+            //user.UserName = user.Email;
             //string uri = "https://localhost:44346/api/";
             string uri = "https://garageproject20190808114242.azurewebsites.net/api/";
             using (var client = new HttpClient())

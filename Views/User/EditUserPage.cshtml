@@ -1,9 +1,16 @@
-﻿@model GarageProject.Models.RegisterViewModel
+﻿@model GarageProject.Models.ApplicationUser
 @{
     ViewBag.Title = "EditUserPage";
 }
+@section css{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css" />
 
-<h2 style="text-align:center;">Updating User's Details</h2>
+    <style>
+        body {
+            background-size: cover;
+            background-color: black;
+            color: gray;
+        }
 
 <div class="jumbotron  field-validation-error">
     @using (Html.BeginForm())
