@@ -14,7 +14,7 @@ using System.Web.Mvc;
 namespace GarageProject.Controllers
 {
     [Authorize]
-    public class VehicleController : Controller
+    public class VehicleController : ApplicationBaseController
     {
         ApplicationDbContext db;
 
@@ -70,10 +70,11 @@ namespace GarageProject.Controllers
             {
                
                 var car = viewModel.Cars;
+                var user = db.Users.Find(viewModel.Users.Id);
                 using (var client = new HttpClient())
                 {
                     //client.BaseAddress = new Uri("https://localhost:44346/api/cars");
-                    client.BaseAddress = new Uri("https://garageproject20190807124138.azurewebsites.net/api/cars");
+                    client.BaseAddress = new Uri("https://garageproject20190808114242.azurewebsites.net/api/cars");
 
                     //HTTP POST
                     JsonMediaTypeFormatter formatter = new JsonMediaTypeFormatter();
@@ -84,9 +85,9 @@ namespace GarageProject.Controllers
                     if (result.IsSuccessStatusCode)
                     {
                         if (HttpContext.User.IsInRole("admin"))
-                            return RedirectToAction("ViewCar", viewModel.Users);
+                            return RedirectToAction("ViewCar","Vehicle", user);
                         else
-                            return RedirectToAction("Index", "User");
+                            return RedirectToAction("ViewCar","Vehicle",user);
                     }
                 }
             }
@@ -105,7 +106,7 @@ namespace GarageProject.Controllers
             using (var client = new HttpClient())
             {
                 //client.BaseAddress = new Uri("https://localhost:44346/api/");
-                client.BaseAddress = new Uri("https://garageproject20190807124138.azurewebsites.net/api/");
+                client.BaseAddress = new Uri("https://garageproject20190808114242.azurewebsites.net/api/");
                 var responsetask = client.GetAsync("cars");
                 responsetask.Wait();
 
@@ -136,7 +137,7 @@ namespace GarageProject.Controllers
         {
             // ApplicationUser user = null;
             //string uri = "https://localhost:44346/api/";
-            string uri = "https://garageproject20190807124138.azurewebsites.net/api/";
+            string uri = "https://garageproject20190808114242.azurewebsites.net/api/";
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(uri);
@@ -170,7 +171,7 @@ namespace GarageProject.Controllers
         {
             var user = db.Users.Find(car.Users.Id);
             //string uri = "https://localhost:44346/api/";
-            string uri = "https://garageproject20190807124138.azurewebsites.net/api/";
+            string uri = "https://garageproject20190808114242.azurewebsites.net/api/";
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(uri);

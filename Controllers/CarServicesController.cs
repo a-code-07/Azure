@@ -98,7 +98,7 @@ namespace GarageProject.Controllers
             };
 
             //string uri = "https://localhost:44346/api/service";
-            string uri = "https://garageproject20190807124138.azurewebsites.net/api/service";
+            string uri = "https://garageproject20190808114242.azurewebsites.net/api/service";
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(uri);
@@ -138,7 +138,7 @@ namespace GarageProject.Controllers
             using (var client = new HttpClient())
             {
                 //client.BaseAddress = new Uri("https://localhost:44346/api/");
-                client.BaseAddress = new Uri("https://garageproject20190807124138.azurewebsites.net/api/");
+                client.BaseAddress = new Uri("https://garageproject20190808114242.azurewebsites.net/api/");
                 var responsetask = client.GetAsync("service?id="+car.Id);
                 responsetask.Wait();
 
