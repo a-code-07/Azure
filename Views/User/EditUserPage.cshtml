@@ -2,60 +2,80 @@
 @{
     ViewBag.Title = "EditUserPage";
 }
+@section css{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css" />
 
-<h2 style="text-align:center;">Updating User's Details</h2>
+    <style>
+        body {
+            background-size: cover;
+            background-color: black;
+            color: gray;
+        }
 
-<div class="jumbotron  field-validation-error">
-    @using (Html.BeginForm())
+        i#r {
+            font-size: 550px;
+            position: absolute;
+            top: 72px;
+            right: 312px;
+        }
+    </style>
+}
+<h2 style="text-align:left;">Edit Profile</h2>
+<body>
+    <div><i class="fas fa-user-edit" id="r" style="opacity:0.4"></i></div>
+
+    <div class="jumbotron  field-validation-error">
+        @using (Html.BeginForm())
+        {
+            <form id="editusr" onsubmit="return validate()">
+                <table class="table form-group field-validation-valid field-validation-error" style="opacity:0.8;">
+                    <tr>
+                        <td class="form-group" style="color:black;">
+                            @Html.LabelFor(m => m.FirstName)
+                        </td>
+                        <td class="form-group" style="color:black;">
+                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", id = "fn" })
+
+                        </td>
+
+                        <td class="form-group" style="color:black;">
+                            @Html.LabelFor(m => m.LastName)
+                        </td>
+                        <td class="form-group" style="color:black;">
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", id = "ln" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="form-group" style="color:black;">
+                            @Html.LabelFor(m => m.PhoneNumber)
+                        </td>
+                        <td class="form-group" style="color:black;">
+                            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+                        </td>
+                        <td class="form-group" style="color:black;">
+                            @Html.LabelFor(m => m.City)
+                        </td>
+                        <td class="form-group" style="color:chocolate;">
+                            @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+                        </td>
+                    </tr>
+
+                </table>
+                @Html.HiddenFor(m => m.Email)
+                @*@Html.HiddenFor(m => m.Cars.Id)*@
+                <button class="btn btn-primary" type="submit">Save</button>
+            </form>
+        }
+    </div>
+    @if (ViewContext.HttpContext.User.IsInRole("admin"))
     {
-    <form id="editusr" onsubmit="return validate()">
-        <table  class="table form-group field-validation-valid field-validation-error">
-            <tr>
-                <td class="form-group" style="color:chocolate;">
-                   @Html.LabelFor(m=>m.FirstName)
-                </td>
-                <td class="form-group" style="color:chocolate;">
-                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", id = "fn" })
-
-                </td>
-
-                <td class="form-group" style="color:chocolate;">
-                    @Html.LabelFor(m => m.LastName)
-                </td>
-                <td class="form-group" style="color:chocolate;">
-                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", id = "ln" })
-                </td>
-            </tr>
-            <tr>
-                <td class="form-group" style="color:chocolate;">
-                    @Html.LabelFor(m => m.PhoneNumber)
-                </td>
-                <td class="form-group" style="color:chocolate;">
-                    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
-                </td>
-                <td class="form-group" style="color:chocolate;">
-                    @Html.LabelFor(m => m.City)
-                </td>
-                <td class="form-group" style="color:chocolate;">
-                    @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
-                </td>
-            </tr>
-
-        </table>
-        @Html.HiddenFor(m => m.Email)
-        @*@Html.HiddenFor(m => m.Cars.Id)*@
-        <button class="btn btn-primary" type="submit">Save</button>
-    </form>
+        <button class="btn akkBtn-dark fa  fa-car">@Html.ActionLink("Back To Home", "Index", "User")</button>
     }
-</div>
-@if (ViewContext.HttpContext.User.IsInRole("admin"))
-{
-    <button class="btn akkBtn-dark fa  fa-car">@Html.ActionLink("Back To Home", "Index", "User")</button>
-}
-else
-{
-<button class="btn akkBtn-dark fa  fa-car">@Html.ActionLink("Back To Home", "IndexUser", "User",Model,new { })</button>
-}
-@section scripts{
-   
+    else
+    {
+        <button class="btn akkBtn-dark fa  fa-car">@Html.ActionLink("Back To Home", "IndexUser", "User", Model, new { })</button>
     }
+    @section scripts{
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</body>
