@@ -1,0 +1,129 @@
+﻿@model GarageProject.ViewModel.CarAndCustomerViewModel
+@{
+    ViewBag.Title = "IndexUser";
+}
+
+<br />
+<br />
+<br />
+
+@section css{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css" />
+    <style>
+        .akkBtn-dark {
+                    color: white;
+                    background-color: cornflowerblue;
+                    border-color: #343a40;
+                }
+        
+                body {
+                    padding: 20px 20px;
+                    background-image:url('../../backgroundImages/bmw_side_view_car_136811_1920x1080.jpg');
+                    background-size:cover;
+                   
+                }
+    </style>
+
+}
+
+
+<button class="btn btn-success"> @Html.ActionLink("Update", "EditUserPage", "User",new { email=Model.Users.UserName}, new { style = "color:white;" })</button>
+<div>
+
+    <table class="table table-hover table-bordered results" style="background-color:gray;">
+        <thead>
+            <tr style="text-align:center;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; color:white;font-size:25px;">
+                <th class="col-md-2 col-xs-2" style="text-align:center;"> First Name </th>
+                <th class="col-md-2 col-xs-2" style="text-align:center;"> Last Name </th>
+                <th class="col-md-2 col-xs-2" style="text-align:center;"> Email </th>
+                <th class="col-md-2 col-xs-2" style="text-align:center;"> City </th>
+                <th class="col-md-2 col-xs-2" style="text-align:center;">Mobile</th>
+
+
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr style="text-align:center;font-family:'Berlin Sans FB';font-size:18px;">
+                <td>@Model.Users.FirstName</td>
+                <td>@Model.Users.LastName</td>
+                <td>@Model.Users.UserName</td>
+                <td>@Model.Users.City</td>
+                <td>@Model.Users.PhoneNumber</td>
+
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<div>
+    @if (Model.UserCar.Any())
+    {
+        <h2 style="text-align:center;color:aliceblue;font-size:50px;">@Model.Users.FirstName's Car</h2>
+
+        <table id="car" class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; background-color:darkgray;color:white;font-size:20px;">
+                    <th class="col-md-2 col-xs-2" style="text-align:center;">VIN</th>
+                    <th class="col-md-2 col-xs-2" style="text-align:center;">Brand</th>
+                    <th class="col-md-2 col-xs-2" style="text-align:center;">Model</th>
+                    <th class="col-md-2 col-xs-2" style="text-align:center;">Style</th>
+                    <th class="col-md-2 col-xs-2" style="text-align:center;">Color</th>
+                    <th style="text-align:center;"></th>
+                    <th style="text-align:center;"></th>
+
+                </tr>
+            </thead>
+            @foreach (var item in Model.UserCar)
+            {
+                if (item.ApplicationUserId.Equals(Model.Users.Id))
+                {
+
+            <tbody>
+                <tr style="text-align:center;font-family:'Berlin Sans FB';font-size:16px;">
+                    <td>@item.VIN</td>
+                    <td>@item.Brand</td>
+                    <td>@item.Model</td>
+                    <td>@item.Style</td>
+                    <td>@item.Color</td>
+                    <td>@Html.ActionLink(" ", "ViewServices", "CarServices", item, new { @class = "btn fa fa-cogs  ", style = "color:black;background-color:lightgray;", title = "View Services" })</td>
+                    <td>@Html.ActionLink(" ", "EditCar", "Vehicle", item, new { @class = "btn fa fa-edit ", style = "color:black;background-color:lightgray;", title = "Edit Car" })</td>
+                    @*<td>@Html.ActionLink(" ", "DelCar", "Car", item, new { @class = "btn fa fa-trash jq-delete ", style = "color:black;background-color:lightgray;" })</td>*@
+                    @*<td><button class="btn btn-danger fa fa-trash fa-1x jq-delete " data-car="@item.Id" type="button" title="Delete"> </button></td>*@
+                </tr>
+            </tbody>
+
+                }
+            }
+
+        </table>
+    }
+
+    else
+    {
+    <p style="text-align:center;font-family:'Berlin Sans FB';background-color:bisque;"> @Model.Users.FirstName Has No car</p>
+    }
+    <button class="btn akkBtn-dark fa  fa-car">@Html.ActionLink("  Add Car", "Create", "Vehicle", Model.Users, new { style = "color:white;" })</button>
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#car .jq-delete').on('click', function () {
+                var button = $(this)
+                if (confirm('Confirm Delete ?')) {
+                    $.ajax({
+                        url: '/api/cars/' + $(this).attr('data-car'),
+                        method: 'DELETE',
+                        success: function () {
+                            button.parents('tr').remove()
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+}

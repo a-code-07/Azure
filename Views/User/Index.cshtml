@@ -1,0 +1,158 @@
+﻿@model IEnumerable<GarageProject.Models.ApplicationUser>
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+  <br />
+  <br />
+  <br />
+
+    <div>
+        <h1 style="text-align:center;font-family:'Bodoni MT';color:white;"><strong style="font-size:80px;">Customer List</strong></h1>
+    </div>
+
+    <head>
+        @section css{
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css" />
+
+            <style>
+
+                body {
+                    padding: 20px 20px;
+                    background-image:url('../../backgroundImages/bmw_side_view_car_136811_1920x1080.jpg');
+                    background-size:cover;
+                   
+                }
+
+                .results tr[visible='false'],
+                .no-result {
+                    display: none;
+                }
+
+                .results tr[visible='true'] {
+                    display: table-row;
+                }
+
+                .counter {
+                    padding: 8px;
+                    color: #ccc;
+                }
+
+                .akkBtn-gray {
+                    color: white;
+                    background-color: gray;
+                    border-color: #343a40;
+                }
+
+                .akkBtn-dark {
+                    color: white;
+                    background-color: black;
+                    border-color: #343a40;
+                }
+            </style>
+        }
+    </head>
+    @*<button class="btn akkBtn-dark fa  fa-user-plus">@Html.ActionLink("  Add Cutomer", "Create", "User")</button>*@
+
+    @if (!Model.Any())
+    {
+        <h3><br /><br />No Customer Added</h3>
+    }
+    else
+    {
+<div>
+     <button class="btn " style="font-family:Britannic;font-size:15px;"> <i class="fa fa-spinner fa-pulse  fa-fw"></i>@Html.ActionLink(" Pending Service Requests", "Approve", "CarServices")</button>
+    
+
+
+    <div class="form-group pull-right" style="display: flex; justify-content: flex-end;tab-size:10;">
+        <input type="text" class="search form-control" placeholder="Search Customer ">
+    </div>
+    <span class="counter pull-right"></span>
+    <div>
+        <table id="customers" class="table table-hover table-bordered results" style="background-color:gray; opacity:0.8;">
+            <thead>
+                <tr style="text-align:center;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; color:white;font-size:25px;">
+                    <th class="col-md-2 col-xs-2" style="text-align:center;"> First Name </th>
+                    <th class="col-md-2 col-xs-2" style="text-align:center;"> Last Name </th>
+                    <th class="col-md-2 col-xs-2" style="text-align:center;"> Email </th>
+                    <th class="col-md-2 col-xs-2" style="text-align:center;"> City </th>
+                    <th class="col-md-2 col-xs-2" style="text-align:center;">Mobile</th>
+                    <th class="col-md-1 col-xs-1"></th>
+                    <th class="col-md-1 col-xs-1"></th>
+                    <th class="col-md-1 col-xs-1"></th>
+                </tr>
+                <tr class="warning no-result">
+                    <td colspan="9"><i class="fa fa-warning"></i> No result</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var cust in Model)
+                {
+                    <tr style="text-align:center;font-family:'Berlin Sans FB'; color:black;font-size:18px;">
+                        <td>@cust.FirstName</td>
+                        <td>@cust.LastName</td>
+                        <td>@cust.UserName</td>
+                        <td>@cust.City</td>
+                        <td>@cust.PhoneNumber</td>
+                        <td>@Html.ActionLink(" ", "ViewCar", "Vehicle", cust, new { @class = "btn btn-success fa fa-car fa-1x  ", style = "color:black;" })</td>
+                        <td>@Html.ActionLink(" ", "EditUserPage", "User", new { email = (string)cust.UserName }, new { @class = "btn btn-warning fa fa-edit fa-1x ", style = "color:black;;" })</td>
+                        <td><button class="btn btn-danger fa fa-trash fa-1x jq-delete " data-customer="@cust.Id" type="button"> </button></td>
+                    </tr>
+                }
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+    }
+    @section scripts{
+        <script>
+        $(document).ready(function () {
+            $(".search").keyup(function () {
+                var searchTerm = $(".search").val();
+                var listItem = $('.results tbody').children('tr');
+                var searchSplit = searchTerm.replace(/ /g, "'):containsi('")
+
+                $.extend($.expr[':'], {
+                    'containsi': function (elem, i, match, array) {
+                        return (elem.textContent || elem.innerText || '').toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+                    }
+                });
+
+                $(".results tbody tr").not(":containsi('" + searchSplit + "')").each(function (e) {
+                    $(this).attr('visible', 'false');
+                });
+
+                $(".results tbody tr:containsi('" + searchSplit + "')").each(function (e) {
+                    $(this).attr('visible', 'true');
+                });
+
+                var jobCount = $('.results tbody tr[visible="true"]').length;
+                $('.counter').text(jobCount + ' item');
+
+                if (jobCount == '0') { $('.no-result').show(); }
+                else { $('.no-result').hide(); }
+            });
+        });
+
+              $(document).ready(function(){
+            $('#customers .jq-delete').on('click', function(){
+                var button=$(this)
+                if (confirm('Confirm Delete ?')) {
+                    $.ajax({
+                        url: '/api/customers/' + $(this).attr('data-customer'),
+                        method: 'DELETE',
+                        success: function () { 
+                            button.parents('tr').remove()
+                        }                     
+                    })
+                }
+            })
+        })
+        </script>
+    }
+

@@ -1,0 +1,75 @@
+﻿@model GarageProject.ViewModel.CarAndServiceViewModel
+@{
+    ViewBag.Title = "Create";
+}
+
+<h1 style="text-align:center;">Add Service</h1>
+
+<div class="jumbotron  field-validation-error">
+    @using (Html.BeginForm())
+    {
+        <table class="table form-group field-validation-valid field-validation-error">
+            <tr>
+                <td class="form-group" style="color:chocolate;">
+                    @Html.LabelFor(m => m.ServiceCar.Miles)
+                </td>
+                <td class="form-group" style="color:chocolate;">
+                    @Html.TextBoxFor(m => m.ServiceCar.Miles, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ServiceCar.Miles)
+                </td>
+                <td class="form-group" style="color:chocolate;">
+                    @Html.LabelFor(m => m.ServiceCar.Details)
+                </td>
+                <td class="form-group" style="color:chocolate;">
+                    @Html.TextBoxFor(m => m.ServiceCar.Details, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ServiceCar.Details)
+
+                </td>
+
+            </tr>
+            <tr>
+                <td class="form-group" style="color:chocolate;">
+                    @Html.Label(" Bearable Cost")
+                </td>
+                <td class="form-group" style="color:chocolate;">
+                    @Html.TextBoxFor(m => m.ServiceCar.Price, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ServiceCar.Price)
+
+                </td>
+                <td class="form-group" style="color:chocolate;">
+                    @Html.LabelFor(m => m.ServiceCar.ServiceType)
+                </td>
+                <td class="form-group" style="color:chocolate;">
+                    @Html.DropDownListFor(m => m.ServiceCar.ServiceType, new SelectList(Model.CarServicesDbs, "CarServicesData", "CarServicesData"), "Select Service type", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ServiceCar.ServiceType)
+
+                </td>
+            </tr>
+
+        </table>
+        @Html.HiddenFor(m => m.Cars.Id)
+        @*<button class="btn btn-primary" type="submit" onclick="Update()">Submit Service Request</button>*@
+        <button class="btn btn-primary" type="submit" onclick="Update()">Submit Service Request</button>
+
+        <div class="alert alert-danger" id="passwordsNoMatchRegister" style="display:none;">
+            <strong>Error!</strong> Looks like the passwords you entered don't match!
+        </div>
+    }
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/toastr")
+<script type="text/javascript">
+    function Update() {
+        setTimeout(function () {
+            sub
+        }, 100000);
+        toastr.success('Submitted Succesfully', 'Submit', { timeOut: 0 });
+    }
+//var funcBtns = {
+//    Update:function(){
+//        toastr.success('Request Submitted Succesfully', 'Submission', { timeOut: 1000 }, {extentedTimeOut:0 });
+//    }
+//};
+</script>
+}

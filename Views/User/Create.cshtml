@@ -1,0 +1,32 @@
+﻿@model GarageProject.Models.ApplicationUser
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm())
+{
+    <div class="form-group" style="color:aliceblue;">
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+    </div>
+    <div class="form-group" style="color:aliceblue;">
+        @Html.LabelFor(m => m.UserName)
+        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+    </div>
+    
+    <div class="form-group" style="color:aliceblue;">
+        @Html.LabelFor(m => m.PhoneNumber)
+        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+    </div>
+    <div class="form-group" style="color:aliceblue;">
+        @Html.LabelFor(m => m.City)
+        @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+    </div>
+
+
+    @Html.HiddenFor(c => c.UserName)
+    <button class="btn btn-primary" type="submit">Add</button>
+}

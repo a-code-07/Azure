@@ -1,0 +1,72 @@
+﻿@model GarageProject.ViewModel.UserCarServiceReqViewModel
+@{
+    ViewBag.Title = "Approve";
+}
+
+<h2 style="text-align:center;">Service Requests</h2>
+@if (ViewContext.HttpContext.User.IsInRole("admin"))
+{
+    using (Html.BeginForm("Approved", "CarServices"))
+    {
+        <div>
+
+            @if (Model.Requests.Any())
+            {
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Car VIN</th>
+                            <th>Car Model</th>
+                            <th>Car Style</th>
+                            <th>Miles</th>
+                            <th>Details</th>
+                            <th>Service Type</th>
+                            <th>Price</th>
+                            <th>Date Requested</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    @foreach (var req in Model.Requests)
+                    {
+
+                        <tbody>
+                            <tr>
+                                <td>@Model.Users.Where(c => c.Id.Equals(req.UserId)).SingleOrDefault().FirstName</td>
+                                <td>@Model.Users.Where(c => c.Id.Equals(req.UserId)).SingleOrDefault().UserName</td>
+                                <td>@Model.Cars.Where(c => c.Id == req.CarId).SingleOrDefault().VIN</td>
+                                <td>@Model.Cars.Where(c => c.Id == req.CarId).SingleOrDefault().Model</td>
+                                <td>@Model.Cars.Where(c => c.Id == req.CarId).SingleOrDefault().Style</td>
+                                <td>@req.Miles</td>
+                                <td>@req.Details</td>
+                                <td>@req.ServiceType</td>
+                                <td>@req.Price</td>
+                                <td>@req.DateRequested</td>
+                                @*@{
+                                        req.Price = Convert.ToInt32(ViewData["PriceVal"]);
+                                    }*@
+                                <td>@Html.ActionLink("Approve", "Approved", "CarServices", new { req.Id }, new { @class = "btn btn-success" })</td>
+                                @*<td><button type="submit" class="btn btn-success">Approve</button></td>*@
+                                <td>@Html.ActionLink("Decline", "Decline", "CarServices", new { req.Id }, new { @class = "btn btn-warning" })</td>
+
+
+                            </tr>
+                        </tbody>
+                    }
+                    @Html.HiddenFor(c => c.Requests)
+                </table>
+
+            }
+
+            else
+            {
+                <h3 style="text-align:center">No Pending Requests</h3>
+            }
+
+
+
+        </div>
+    }
+}

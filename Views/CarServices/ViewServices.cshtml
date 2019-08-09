@@ -1,0 +1,171 @@
+﻿@model GarageProject.ViewModel.CarAndServiceViewModel
+@{
+    ViewBag.Title = "ViewServices";
+}
+
+<br />
+<br />
+@section css{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css" />
+
+}
+@{
+    var carSer = Model.Cars;
+    carSer.Model = Model.Cars.Model;
+    carSer.Style = Model.Cars.Style;
+    carSer.Color = Model.Cars.Color;
+    carSer.VIN = Model.Cars.VIN;
+    carSer.ApplicationUserId = Model.Cars.ApplicationUserId;
+}
+<div>
+    <table class="table table-hover table-bordered results" style="background-color:gray;">
+        <thead>
+            <tr style="text-align:center;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; color:white;font-size:15px;">
+                <th class="col-md-2 col-xs-2" style="text-align:center;"> Brand </th>
+                <th class="col-md-2 col-xs-2" style="text-align:center;"> Style </th>
+                <th class="col-md-2 col-xs-2" style="text-align:center;"> Model </th>
+                <th class="col-md-2 col-xs-2" style="text-align:center;"> Color</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="text-align:center;font-family:'Berlin Sans FB';">
+                <td>@Model.Cars.Brand</td>
+                <td>@Model.Cars.Style</td>
+                <td>@Model.Cars.Model</td>
+                <td>@Model.Cars.Color</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+@if (Model.CarServices.Any())
+{
+
+    <div>
+        <h2 style="text-align:center;">Service Details</h2>
+        <table id="service" class="table table-hover table-bordered results" style="background-color:gray;">
+            <thead>
+                <tr style="text-align:center;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; color:white;font-size:15px;">
+                    <th class="col-md-2 col-xs-2" style="text-align:center;"> Miles </th>
+                    <th class="col-md-2 col-xs-2" style="text-align:center;"> Price </th>
+                    <th class="col-md-2 col-xs-2" style="text-align:center;"> Details</th>
+                    <th class="col-md-2 col-xs-2" style="text-align:center;"> Service Type</th>
+                    <th class="col-md-2 col-xs-2" style="text-align:center;"> Date Requested</th>
+                    <th class="col-md-2 col-xs-2" style="text-align:center;"> Date Added</th>
+                    @if (ViewContext.HttpContext.User.IsInRole("admin"))
+                    {
+                        <th class="col-md-1 col-xs-1" style="text-align:center;"></th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var ser in Model.CarServices)
+                {
+                    if (ser.CarId == Model.Cars.Id)
+                    {
+                        <tr style="text-align:center;font-family:'Berlin Sans FB';">
+                            <td>@ser.Miles</td>
+                            <td>@ser.Price</td>
+                            <td>@ser.Details</td>
+                            <td>@ser.ServiceType</td>
+                            <td>@ser.Requested.ToLongDateString()</td>
+                            <td>@ser.DateAdded.ToLongDateString()</td>
+                            @if (ViewContext.HttpContext.User.IsInRole("admin"))
+                            {
+                                <td><button class="btn btn-danger fa fa-trash fa-1x jq-delete " data-customer="@ser.Id" type="button"> </button></td>
+                            }
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+}
+else
+{
+    <p> No Service Yet</p>
+}
+@{
+    if (!ViewContext.HttpContext.User.IsInRole("admin"))
+    {
+        @Html.ActionLink(" Request Service", "Create", "CarServices", carSer, new { @class = "btn btn-warning" })
+
+    }
+    @*else
+        {
+            <button class="btn akkBtn-dark fa  fa-user-plus">@Html.ActionLink("Request Service", "Create", "CarServices", Model.Cars, new { })</button>
+
+        }*@
+}
+<hr />
+
+@if (Model.PendingRequests.Any())
+{
+
+    <div>
+        <h2 style="text-align:center;">Pending Service Requests</h2>
+        <table id="service" class="table table-hover table-bordered results" style="background-color:gray;">
+            <thead>
+                <tr style="text-align:center;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; color:white;font-size:15px;">
+                    <th class="col-md-2 col-xs-2" style="text-align:center;"> Miles </th>
+                    <th class="col-md-2 col-xs-2" style="text-align:center;"> Price </th>
+                    <th class="col-md-2 col-xs-2" style="text-align:center;"> Details</th>
+                    <th class="col-md-2 col-xs-2" style="text-align:center;"> Service Type</th>
+                    <th class="col-md-2 col-xs-2" style="text-align:center;"> Date Requested</th>
+                    @if (ViewContext.HttpContext.User.IsInRole("admin"))
+                    {
+                        <th class="col-md-1 col-xs-1" style="text-align:center;"></th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var ser in Model.PendingRequests)
+                {
+                    if (ser.UserId == Model.Cars.ApplicationUserId)
+                    {
+                        <tr style="text-align:center;font-family:'Berlin Sans FB';">
+                            <td>@ser.Miles</td>
+                            <td>@ser.Price</td>
+                            <td>@ser.Details</td>
+                            <td>@ser.ServiceType</td>
+                            <td>@ser.DateRequested.ToLongDateString()</td>
+                            @if (ViewContext.HttpContext.User.IsInRole("admin"))
+                            {
+                                <td><button class="btn btn-danger fa fa-trash fa-1x jq-delete " data-customer="@ser.Id" type="button"> </button></td>
+                            }
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+}
+else
+{
+    <h3 style="text-align:center"> No Pending Request</h3>
+}
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#service .jq-delete').on('click', function () {
+                var button = $(this)
+                if (confirm('Confirm Delete ?')) {
+                    $.ajax({
+                        url: '/api/service/' + $(this).attr('data-customer'),
+                        method: 'DELETE',
+                        success: function () {
+                            button.parents('tr').remove()
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+}
+
+

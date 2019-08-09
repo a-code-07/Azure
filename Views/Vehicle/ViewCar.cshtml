@@ -1,0 +1,125 @@
+﻿@model GarageProject.ViewModel.ViewCarCustomerViewModel
+@{
+    ViewBag.Title = "ViewCar";
+}
+
+@section css{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css" />
+    <style>
+        .akkBtn-dark {
+            color: white;
+            background-color: cornflowerblue;
+            border-color: #343a40;
+        }
+    </style>
+}
+<br />
+<br />
+
+<h1 style="color:darkslategray;font-family:Candara; text-align:center;"><strong>User Details</strong></h1>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th style="text-align:center;">First Name</th>
+            <th style="text-align:center;">Last Name</th>
+            <th style="text-align:center;">Email</th>
+            <th style="text-align:center;">City</th>
+            <th style="text-align:center;">Mobile</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="text-align:center;">@Model.Users.FirstName</td>
+            <td style="text-align:center;">@Model.Users.LastName</td>
+            <td style="text-align:center;">@Model.Users.Email</td>
+            <td style="text-align:center;">@Model.Users.City</td>
+            <td style="text-align:center;">@Model.Users.PhoneNumber</td>
+        </tr>
+    </tbody>
+
+</table>
+
+<h1 style="color:darkslategray;font-family:Candara; text-align:center;"><strong>Car Details</strong></h1>
+
+<button class="btn akkBtn-dark fa  fa-car">@Html.ActionLink("  Add Car", "Create", "Vehicle", Model.Users, new { style = "color:white;" })</button>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<br />
+
+@{
+    var cr = Model.Cars.Where(c => c.ApplicationUserId == Model.Users.Id).ToList();
+    if (cr.Any())
+    {
+        <table id="car" class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; background-color:darkgray;color:white;font-size:20px;">
+                    <th style="text-align:center;">VIN</th>
+                    <th style="text-align:center;">Brand</th>
+                    <th style="text-align:center;">Model</th>
+                    <th style="text-align:center;">Style</th>
+                    <th style="text-align:center;">Color</th>
+                    <th style="text-align:center;"></th>
+                    <th style="text-align:center;"></th>
+                    @if (ViewContext.HttpContext.User.IsInRole("admin"))
+                    {
+                        <th style="text-align:center;"></th>
+                    }
+                </tr>
+            </thead>
+
+
+            @foreach (var item in Model.Cars)
+            {
+                if (item.ApplicationUserId.Equals(Model.Users.Id))
+                {
+                    <tbody>
+                        <tr>
+                            <td>@item.VIN</td>
+                            <td>@item.Brand</td>
+                            <td>@item.Model</td>
+                            <td>@item.Style</td>
+                            <td>@item.Color</td>
+                            <td>@Html.ActionLink(" ", "ViewServices", "CarServices", item, new { @class = "btn fa fa-cogs  ", style = "color:black;background-color:lightgray;" })</td>
+                            <td>@Html.ActionLink(" ", "EditCar", "Vehicle", item, new { @class = "btn fa fa-edit ", style = "color:black;background-color:lightgray;" })</td>
+                            @*<td>@Html.ActionLink(" ", "DelCar", "Car", item, new { @class = "btn fa fa-trash jq-delete ", style = "color:black;background-color:lightgray;" })</td>*@
+                            @if (ViewContext.HttpContext.User.IsInRole("admin"))
+                            {
+                                <td><button class="btn btn-danger fa fa-trash fa-1x jq-delete " data-car="@item.Id" type="button"> </button></td>
+                            }
+                        </tr>
+                    </tbody>
+                }
+
+
+            }
+
+        </table>
+    }
+    else
+    {
+
+        <h3>No Car Added Yet </h3>
+
+    }
+}
+<button class="btn akkBtn-dark fa  fa-car">@Html.ActionLink(" Back To Home", "Index", "User")</button>
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+            $('#car .jq-delete').on('click', function () {
+                var button = $(this)
+                if (confirm('Confirm Delete ?')) {
+                    $.ajax({
+                        url: '/api/cars/' + $(this).attr('data-car'),
+                        method: 'DELETE',
+                        success: function () {
+                            button.parents('tr').remove()
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+}

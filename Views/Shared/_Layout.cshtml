@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("css",false)
+    <style>
+        h1 {
+    font-size: 40px;
+    font-family: fantasy;
+    text-transform: capitalize;
+}
+       a {
+    padding-bottom: 0px;
+    background-color: transparent;
+}
+}
+        a:hover{
+    border-bottom: 5px solid #0c58b7;
+}
+        .mainImg {
+    filter: blur(2px);
+}
+        h1::before{
+            text-decoration:solid;
+        }
+        .MyServices {
+    height: 500px;
+    background-color:cadetblue;
+}
+        .col-lg-6.CommonClass {
+    margin-top: 37px;
+}
+        nav-collapse.collapse {
+    background-color: rgba(0,0,0,0.9);
+}
+         
+        .navbar-fixed-top.scrolled {
+  background-color: #fff !important;
+  transition: background-color 200ms linear;
+}
+        .loupe {
+    float: left;
+    width: 50px;
+    height: 55px;
+    border: 0;
+    /*background: url(../img/sprites.png?a);
+    background: url(../img/sprites.svg?a),no-repeat;*/
+    background-position: 15px -83px;
+    opacity: .75;
+    transition: opacity .3s;
+}
+        .q {
+    width: 100%;
+    margin: 0;
+    padding: 18px 0;
+    border: 0;
+    font: normal 16px arial,sans-serif;
+}
+
+
+
+
+
+
+     
+img {
+    width: 100%;
+}
+    </style>
+    <script>
+        $(function () {
+  $(document).scroll(function () {
+    var $nav = $(".navbar-fixed-top");
+    $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
+  });
+});
+
+    </script>
+</head>
+<body style="margin:0px">
+    @Html.Partial("_Navbar")
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
