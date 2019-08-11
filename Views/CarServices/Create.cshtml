@@ -29,7 +29,7 @@
             </tr>
             <tr>
                 <td class="form-group" style="color:chocolate;">
-                    @Html.Label(" Bearable Cost")
+                    @Html.Label(" Expected Cost")
                 </td>
                 <td class="form-group" style="color:chocolate;">
                     @Html.TextBoxFor(m => m.ServiceCar.Price, new { @class = "form-control" })
@@ -51,9 +51,7 @@
         @*<button class="btn btn-primary" type="submit" onclick="Update()">Submit Service Request</button>*@
         <button class="btn btn-primary" type="submit" onclick="Update()">Submit Service Request</button>
 
-        <div class="alert alert-danger" id="passwordsNoMatchRegister" style="display:none;">
-            <strong>Error!</strong> Looks like the passwords you entered don't match!
-        </div>
+       
     }
 </div>
 @section Scripts {

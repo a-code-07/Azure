@@ -35,28 +35,119 @@ namespace GarageProject.Controllers
             return View();
         }
 
-        //public ActionResult ViewCar(ApplicationUser user)
-        //{
-        //    var viewModel = new CustomerViewModel()
-        //    {
-        //        SingleUser = user,
-        //        Cars = db.Cars.ToList()
-        //    };
-        //    return View(viewModel);
-        //}
+       
+
+        public IEnumerable<CarStyleDb> CarStyleList()
+        {
+            string uri = "https://garageproject20190808114242.azurewebsites.net/api/";
+
+            using (var styleClient = new HttpClient())
+            {
+                styleClient.BaseAddress = new Uri(uri);
+
+                var responseTaskStyle = styleClient.GetAsync("AddStyles");
+                responseTaskStyle.Wait();
+                var resultStyl = responseTaskStyle.Result;
+
+                if (resultStyl.IsSuccessStatusCode)
+                {
+                    var readStyle = resultStyl.Content.ReadAsAsync<IEnumerable<CarStyleDb>>();
+                    readStyle.Wait();
+
+                    return readStyle.Result;
+                }
+                //viewModel1.CarBrandDbs = database.CarBrandDbs.ToList();
+                // viewModel1.CarStyleDbs = database.CarStyleDbs.ToList();
+                return null;
+            }
+        }
+
+
+        public  IEnumerable<CarBrandDb> CarBrandList()
+        {
+            string uri = "https://garageproject20190808114242.azurewebsites.net/api/";
+
+            using (var brndClient = new HttpClient())
+            {
+                brndClient.BaseAddress = new Uri(uri);
+
+                var responseTaskBrnd = brndClient.GetAsync("AddBrands");
+                responseTaskBrnd.Wait();
+                var resultBrnd = responseTaskBrnd.Result;
+
+                if (resultBrnd.IsSuccessStatusCode)
+                {
+                    var readbrnd = resultBrnd.Content.ReadAsAsync<IEnumerable<CarBrandDb>>();
+                    readbrnd.Wait();
+
+                    return readbrnd.Result;
+                }
+
+            }
+            return null;
+
+        }
+
+        public ApplicationUser GetUsrById(string uid)
+        {
+            string uri = "https://garageproject20190808114242.azurewebsites.net/api/";
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(uri);
+
+                var viewModel1 = new CarAndCustomerViewModel();
+                var responseTask = client.GetAsync("customers?id=" + uid.ToString());
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<ApplicationUser>();
+                    readTask.Wait();
+
+                    return readTask.Result;
+                }
+            }
+            return null;
+        }
+
+        public ApplicationUser GetUsr(string uid)
+        {
+            string uri = "https://garageproject20190808114242.azurewebsites.net/api/";
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(uri);
+
+                var viewModel1 = new CarAndCustomerViewModel();
+                var responseTask = client.GetAsync("customers/" + uid.ToString());
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<ApplicationUser>();
+                    readTask.Wait();
+
+                    return readTask.Result;
+                }
+            }
+            return null;
+        }
 
         public ActionResult Create(ApplicationUser user)
         {
+            
 
             var viewModel = new CarAndCustomerViewModel()
             {
-                Users=user,
-                CarBrandDbs=db.CarBrandDbs.ToList(),
-                CarStyleDbs=db.CarStyleDbs.ToList()
+                Users = user,
+                CarBrandDbs = CarBrandList(),
+                CarStyleDbs=  CarStyleList()
             };
             return View(viewModel);
         }
 
+        
 
         [HttpPost]
         public ActionResult Create(CarAndCustomerViewModel viewModel)
@@ -70,7 +161,7 @@ namespace GarageProject.Controllers
             {
                
                 var car = viewModel.Cars;
-                var user = db.Users.Find(viewModel.Users.Id);
+                var user = GetUsr(viewModel.Users.Id);
                 using (var client = new HttpClient())
                 {
                     //client.BaseAddress = new Uri("https://localhost:44346/api/cars");
@@ -87,7 +178,7 @@ namespace GarageProject.Controllers
                         if (HttpContext.User.IsInRole("admin"))
                             return RedirectToAction("ViewCar","Vehicle" ,user);
                         else
-                            return RedirectToAction("ViewCar", "Vehicle",user);
+                            return RedirectToAction("IndexUser", "User");
                     }
                 }
             }
@@ -155,9 +246,9 @@ namespace GarageProject.Controllers
                     var viewModel = new CarAndCustomerViewModel()
                     {
                         Cars=readTask.Result,
-                        Users=db.Users.Where(c=>c.Id.Equals(car.ApplicationUserId)).SingleOrDefault(),
-                        CarBrandDbs=db.CarBrandDbs.ToList(),
-                        CarStyleDbs=db.CarStyleDbs.ToList()
+                        Users=GetUsrById(car.ApplicationUserId),
+                        CarBrandDbs=CarBrandList(),
+                        CarStyleDbs=CarStyleList()
                     };
 
                     return View(viewModel);
@@ -169,7 +260,7 @@ namespace GarageProject.Controllers
         [HttpPost]
         public ActionResult EditCar(CarAndCustomerViewModel car)
         {
-            var user = db.Users.Find(car.Users.Id);
+            var user = GetUsrById(car.Users.Id);
             //string uri = "https://localhost:44346/api/";
             string uri = "https://garageproject20190808114242.azurewebsites.net/api/";
             using (var client = new HttpClient())

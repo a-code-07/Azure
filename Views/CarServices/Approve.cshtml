@@ -43,7 +43,7 @@
                                 <td>@req.Details</td>
                                 <td>@req.ServiceType</td>
                                 <td>@req.Price</td>
-                                <td>@req.DateRequested</td>
+                                <td>@req.DateRequested.ToLongDateString()</td>
                                 @*@{
                                         req.Price = Convert.ToInt32(ViewData["PriceVal"]);
                                     }*@

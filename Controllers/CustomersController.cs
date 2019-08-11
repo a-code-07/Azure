@@ -22,7 +22,7 @@ namespace GarageProject.APIs
             database.Dispose();
         }
 
-        [HttpGet]
+        
         public IHttpActionResult GetAllCustomers()
         {
 
@@ -38,12 +38,21 @@ namespace GarageProject.APIs
             return Ok(customer);
         }
 
+        //[HttpGet]
+        //public IHttpActionResult GetCustomerById(string uid)
+        //{
+        //    // CustomerViewModel customer = null;
+        //    var customer = database.Users.Where(c => c.UserName.ToLower()==(uid.ToLower().ToString())).SingleOrDefault();
+        //    return Ok(customer);
+        //}
+
         [HttpGet]
-        public IHttpActionResult GetCustomerById(string username )
+        public IHttpActionResult GetCustomerById(string id)
         {
-            // CustomerViewModel customer = null;
-            var customer = database.Users.Where(c => c.UserName.ToLower().Equals(username.ToLower().ToString())).SingleOrDefault();
-            return Ok(customer);
+            
+                var usrs = database.Users.Find(id);
+                return Ok(usrs);
+           
         }
 
 

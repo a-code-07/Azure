@@ -120,7 +120,7 @@
                                 <td>@cust.City</td>
                                 <td>@cust.PhoneNumber</td>
                                 <td>@Html.ActionLink(" ", "ViewCar", "Vehicle", cust, new { @class = "btn btn-primary fa fa-car", style = "color:black;", title = "View Cars" })</td>
-                                <td>@Html.ActionLink(" ", "EditUserPage", "User", new { email = (string)cust.UserName }, new { @class = "btn btn-success fa fa-edit", style = "color:black;", title = "Edit Profile" })</td>
+                                <td>@Html.ActionLink(" ", "EditUserPage", "User", new { id = (string)cust.Id }, new { @class = "btn btn-success fa fa-edit", style = "color:black;", title = "Edit Profile" })</td>
                                 <td><button class="btn btn-danger fa fa-trash jq-delete " data-customer="@cust.Id" title="Delete Customer" type="button"> </button></td>
                             </tr>
                         }

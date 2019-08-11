@@ -122,18 +122,18 @@ namespace GarageProject.Controllers
         public ActionResult IndexUser()
         {
             //string email = User.Identity.GetUserName();
-            string uid = User.Identity.GetUserName();
+            string uid = User.Identity.GetUserId();
             //string uri = "https://localhost:44346/api/";
             string uri = "https://garageproject20190808114242.azurewebsites.net/api/";
 
 
-           
+
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(uri);
 
                 var viewModel1 = new CarAndCustomerViewModel();
-                var responseTask = client.GetAsync("customers?username=" + uid.ToString());
+                var responseTask = client.GetAsync("customers/" + uid.ToString());
                 responseTask.Wait();
 
                 var result = responseTask.Result;
@@ -144,7 +144,7 @@ namespace GarageProject.Controllers
 
                     viewModel1.Users = readTask.Result;
                 }
-                
+
                 var responseTask1 = client.GetAsync("cars");
                 responseTask1.Wait();
                 var result1 = responseTask1.Result;
@@ -153,19 +153,53 @@ namespace GarageProject.Controllers
                 {
                     var readTask = result1.Content.ReadAsAsync<IEnumerable<Car>>();
                     readTask.Wait();
-                    viewModel1.UserCar = readTask.Result.Where(c=>c.ApplicationUserId.Equals(viewModel1.Users.Id)).ToList();
+                    viewModel1.UserCar = readTask.Result.Where(c => c.ApplicationUserId.Equals(viewModel1.Users.Id)).ToList();
                 }
-                viewModel1.CarBrandDbs = database.CarBrandDbs.ToList();
-                viewModel1.CarStyleDbs = database.CarStyleDbs.ToList();
-                return View(viewModel1);
-            }  
+
+
+                using (var brndClient = new HttpClient())
+                {
+                    brndClient.BaseAddress = new Uri(uri);
+
+                    var responseTaskBrnd = brndClient.GetAsync("AddBrands");
+                    responseTaskBrnd.Wait();
+                    var resultBrnd = responseTaskBrnd.Result;
+
+                    if (resultBrnd.IsSuccessStatusCode)
+                    {
+                        var readbrnd = resultBrnd.Content.ReadAsAsync<IEnumerable<CarBrandDb>>();
+                        readbrnd.Wait();
+
+                        viewModel1.CarBrandDbs = readbrnd.Result;
+                    }
+                   
+                   
+                }
+                using (var styleClient = new HttpClient())
+                {
+                    styleClient.BaseAddress = new Uri(uri);
+
+                    var responseTaskStyle = styleClient.GetAsync("AddStyles");
+                    responseTaskStyle.Wait();
+                    var resultStyl = responseTaskStyle.Result;
+
+                    if (resultStyl.IsSuccessStatusCode)
+                    {
+                        var readStyle = resultStyl.Content.ReadAsAsync<IEnumerable<CarStyleDb>>();
+                        readStyle.Wait();
+
+                        viewModel1.CarStyleDbs = readStyle.Result;
+                    }
+                  
+                    return View(viewModel1);
+                }
+            }
         }
 
         //Edit Start Here
         
-        public ActionResult EditUserPage(string email)
+        public ActionResult EditUserPage(string id)
         {
-           // ApplicationUser user = null;
             //string uri = "https://localhost:44346/api/";
             string uri = "https://garageproject20190808114242.azurewebsites.net/api/";
             using (var client = new HttpClient())
@@ -173,7 +207,7 @@ namespace GarageProject.Controllers
                 client.BaseAddress = new Uri(uri);
 
 
-                var responseTask = client.GetAsync("customers?username="+email);
+                var responseTask = client.GetAsync("customers/" +id.ToString());
                 responseTask.Wait();
 
                 var result = responseTask.Result;
@@ -191,58 +225,7 @@ namespace GarageProject.Controllers
         }
 
 
-        //public ActionResult EditData(ApplicationUser user)
-        //{
-        //    using(var db= new ApplicationDbContext())
-        //    {
-        //        var userData = db.Users.Where(c => c.UserName.Equals(user.UserName)).SingleOrDefault();
-
-        //        userData.Name = user.Name;
-        //        userData.PhoneNumber = user.PhoneNumber;
-        //        userData.City = user.City;
-
-        //        db.SaveChanges();
-
-        //    }
-        //    if (HttpContext.User.IsInRole("admin"))
-        //    {
-        //        return RedirectToAction("Index");
-        //    }
-        //    else
-        //        return RedirectToAction("IndexUser");
-        //}
-
-        //[HttpGet]
-        //public ActionResult EditData(string email)
-        //{
-        //    ApplicationUser user = null;
-        //    string uri = "https://localhost:44346/api/";
-        //    using (var client = new HttpClient())
-        //    {
-        //        client.BaseAddress = new Uri(uri);
-
-
-        //        var responseTask = client.GetAsync("customers?username=" + email);
-        //        responseTask.Wait();
-
-        //        var result = responseTask.Result;
-        //        if (result.IsSuccessStatusCode)
-        //        {
-        //            var readTask = result.Content.ReadAsAsync<ApplicationUser>();
-        //            readTask.Wait();
-
-        //            user = readTask.Result;
-        //        }
-        //    }
-        //    return View(user);           
-        //}
-
-        //    public bool IsValidate(ApplicationUser user)
-        //{
-        //    if(user.FirstName.)
-        //    return true;
-        //}
-
+      
         [HttpPost]
         public ActionResult EditUserPage(ApplicationUser user)
         {

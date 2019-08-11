@@ -74,6 +74,7 @@
                     </td>
                 </tr>
             </table>
+            @Html.HiddenFor(m => m.Users.UserName)
             @Html.HiddenFor(m => m.Users.Id)
             @*@Html.HiddenFor(m=>m.Car.Id)*@
             <button class="btn btn-primary" type="submit">Save</button>

@@ -22,6 +22,7 @@ namespace GarageProject.Controllers
             db.Dispose();
         }
 
+        [HttpGet]
         public IHttpActionResult GetAllStyles()
         {
             return Ok(db.CarStyleDbs.ToList());

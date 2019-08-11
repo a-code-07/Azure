@@ -22,6 +22,7 @@ namespace GarageProject.Controllers
             db.Dispose();
         }
 
+        [HttpGet]
         public IHttpActionResult GetAllBrands()
         {
             return Ok(db.CarBrandDbs.ToList());
