@@ -431,6 +431,8 @@
     <Content Include="Views\CarServices\ViewServices.cshtml" />
     <Content Include="Views\CarServices\Create.cshtml" />
     <Content Include="Views\CarServices\Approve.cshtml" />
+    <Content Include="Views\Home\Privacy.cshtml" />
+    <Content Include="Views\Home\Terms.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

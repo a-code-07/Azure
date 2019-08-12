@@ -212,7 +212,7 @@
                 $.ajax({
                     data: JSON.stringify(addData.CarServicesData),
                     dataType: 'json',
-                    url: '/api/AddServices/',
+                    url: '/api/Services/',
                     data: addData,
                     method: 'POST',
                     success: function () {
@@ -227,7 +227,7 @@
                     var button = $(this)
                     if (confirm('Confirm Delete ?')) {
                         $.ajax({
-                            url: '/api/AddServices/' + $(this).attr('data-ser'),
+                            url: '/api/Services/' + $(this).attr('data-ser'),
                             method: 'DELETE',
                             success: function () {
                                 button.parents('tr').remove()

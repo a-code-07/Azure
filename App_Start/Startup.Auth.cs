@@ -55,14 +55,14 @@ namespace GarageProject
             //   consumerSecret: "");
 
             app.UseFacebookAuthentication(
-               appId: "2385551038432614",
-               appSecret: "406aa8fb603e15cdeeeb540b568d2c36");
+               appId: "513699882708514",
+               appSecret: "84cad932597cae30596a069ed773ac66");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "443939825909-cummbbiv5qpo2ctvnj2bv7kvjh3l5o0v.apps.googleusercontent.com",
-            //    ClientSecret = "DAz3bYeatJ - DIca8si6BzRw_"
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "924932257707-5te4tv2hs3d0dpfnabltes0kcdbe84mm.apps.googleusercontent.com",
+                ClientSecret = "ZCBlNihZox8cSlM06WEP9zdx"
+            });
         }
     }
 }

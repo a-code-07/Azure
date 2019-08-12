@@ -3,10 +3,32 @@
     ViewBag.Title = "EditCar";
 }
 
+<head>
+    @section css{
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css" />
 
+        <style>
+
+            body {
+                padding: 20px 20px;
+                background-size: cover;
+                background-color: black;
+                color: gray;
+            }
+
+            i#r {
+                font-size: 550px;
+                position: absolute;
+                top: 107px;
+                right: 326px;
+            }
+        </style>
+    }
+</head>
+<br />
 
 <div style="background-color:gray;background-size:contain;">
-    <h1 style="text-align:center;font-family:'Bodoni MT';color:lightyellow;"><strong>Updating Car Details</strong></h1>
+    <h1 style="text-align:center;font-family:'Bodoni MT';color:#337ab7;"><strong>Update Car Details</strong></h1>
 </div>
 <br />
 <div class="jumbotron  field-validation-error">
@@ -14,45 +36,45 @@
     {
         <table class="table form-group field-validation-valid field-validation-error">
             <tr>
-                <td class="form-group" style="color:chocolate;">
-                    @Html.LabelFor(m =>m.Cars.VIN)
+                <td class="form-group" style="color:black;">
+                    @Html.LabelFor(m => m.Cars.VIN)
                 </td>
-                <td class="form-group" style="color:chocolate;">
+                <td class="form-group" style="color:black;">
                     @Html.TextBoxFor(m => m.Cars.VIN, new { @class = "form-control" })
                 </td>
 
-                <td class="form-group" style="color:chocolate;">
+                <td class="form-group" style="color:black;">
                     @Html.LabelFor(m => m.Cars.Brand)
                 </td>
-                <td class="form-group" style="color:chocolate;">
+                <td class="form-group" style="color:black;">
                     @Html.DropDownListFor(m => m.Cars.Brand, new SelectList(Model.CarBrandDbs, "CarBrandsData", "CarBrandsData"), "Select Brand", new { @class = "form-control" })
                 </td>
             </tr>
             <tr>
-                <td class="form-group" style="color:chocolate;">
+                <td class="form-group" style="color:black;">
                     @Html.LabelFor(m => m.Cars.Model)
                 </td>
-                <td class="form-group" style="color:chocolate;">
+                <td class="form-group" style="color:black;">
                     @Html.TextBoxFor(m => m.Cars.Model, new { @class = "form-control" })
                 </td>
-                <td class="form-group" style="color:chocolate;">
+                <td class="form-group" style="color:black;">
                     @Html.LabelFor(m => m.Cars.Style)
                 </td>
-                <td class="form-group" style="color:chocolate;">
+                <td class="form-group" style="color:black;">
                     @Html.DropDownListFor(m => m.Cars.Style, new SelectList(Model.CarStyleDbs, "CarStylesData", "CarStylesData"), "Select Style", new { @class = "form-control" })
                 </td>
             </tr>
             <tr>
-                <td class="form-group" style="color:chocolate;">
+                <td class="form-group" style="color:black;">
                     @Html.LabelFor(m => m.Cars.Color)
                 </td>
-                <td class="form-group" style="color:chocolate;">
+                <td class="form-group" style="color:black;">
                     @Html.TextBoxFor(m => m.Cars.Color, new { @class = "form-control" })
                 </td>
             </tr>
         </table>
         @Html.HiddenFor(m => m.Users.Id)
-        @Html.HiddenFor(m=>m.Cars.Id)
+        @Html.HiddenFor(m => m.Cars.Id)
         <button class="btn btn-primary" type="submit">Save</button>
     }
 </div>
