@@ -22,13 +22,24 @@ namespace GarageProject
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
+                      "~/Scripts/bootstrap.js",
+                       "~/Scripts/jquery.min.js",
+                      "~/Scripts/bootstrap.bundle.min.js",
+                      "~/Scripts/jquery.easing.min.js",
+                      "~/Scripts/jqBootstrapValidation.js",
+                      "~/Scripts/contact_me.js",
+                      "~/Scripts/agency.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                       "~/Content/agency.min.css",
+                        "~/Content/all.min.css",
+                      "~/Content/bootstrap.min.css",
+                      "~/Content/brands.css",
                       "~/Content/toastr.css",
                       "~/Content/site.css",
-                      "~/Content/validation.css"));
+                      "~/Content/validation.css",
+                       "~/Content/solid.css"));
         }
     }
 }
