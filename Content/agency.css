@@ -22,7 +22,7 @@ a:hover {
 }
 
 .text-primary {
-  color: #fed136 !important;
+    color: #307999 !important;
 }
 
 h1,
@@ -228,7 +228,7 @@ header.masthead .intro-text .intro-heading {
 .service-heading {
   margin: 15px 0;
   text-transform: none;
-  color:white
+  color:yellow;
 }
 
 #portfolio .portfolio-item {
@@ -449,7 +449,7 @@ header.masthead .intro-text .intro-heading {
   color: white;
   border: 7px solid #e9ecef;
   border-radius: 100%;
-  background-color: #fed136;
+ background-color:#307999;
 }
 
 .timeline > li .timeline-image h4 {
